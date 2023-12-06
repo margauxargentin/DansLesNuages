@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');
+
+:root{
+    --primary-color : #a6d1e4;
+    --secondary-color : #7494a0;
+    --contrast-color : #fae04e;
+    --contrast-color2: #efcb00;
+    --background-color : #deeaec;
+
+    --bulle-font : 'Gochi Hand', cursive;
+    --bulle-size : 16px;
+}
+
+html{
+    margin:0;
+    padding:0;
+    background-image: url(medias/cloud_background.jpg);
+    background-size: cover;
+}
+body{
+    width : 75vw;
+    min-height: 90vh;
+    margin:5vh auto;
+    padding:0;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 50px auto 80px;
+    grid-template-areas: 
+    "main main main"
+    ". footer .";
+
+    text-align: center;
+    font-size : 12px;
+}
+main{
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-areas: 
+    "section1 main section3"
+}
+aside{
+    background: linear-gradient(30deg,var(--secondary-color), var(--primary-color), white );
+}
+
+h1, h2, h3{
+    font-family: 'Gochi Hand', cursive;
+    margin:0;
+}
+/* ======== FOOTER =======*/
+footer{
+    grid-area: footer;
+    margin : 0;
+    padding : 0;
+    background-color: var(--background-color);
+}
+footer p{
+    margin:0;
+    padding:0;
+}
+
+/* ======== HEADER =======*/
+header{
+    grid-area: header;
+    background-color: var(--background-color);
+}
+section{
+    grid-area: main;
+    background-color: var(--background-color); 
+}
+
+/* ======== AD =======*/
+.ad{
+    position : relative;
+    padding:0;
+    margin : 10px;
+    height : 200px;
+}
+.ad button{
+    position: absolute;
+    top:0;
+    right:0;
+    margin:0;
+    padding:0;
+}
+
+.ad img{
+    width : 100%;
+}
+
+/* ======== GLOBAL =======*/
+
+img{
+    box-sizing: border-box;
+}
+
+.intro{
+    display: flex;
+    flex-wrap: wrap;
+}
+.intro h2{
+    width:100%;
+}
+.intro img{
+    width : 30%;
+}
+.intro p{
+    width : 70%;
+}
+.intro p, .question label{
+    font-family: var(--bulle-font);
+    font-size : var(--bulle-size);
+}
+
+.question{
+    display: flex;
+    flex-direction: column;
+    justify-items: space-evenly;
+    align-items: center;
+    height : 60vh;
+}
+
+.question button, .question input{
+    margin : auto;
+}
+
+.image{
+    height: 35vh;
+    border : 10px solid white;
+    border-bottom : 40px solid white;
+}
+.image p{
+    font-size:10px;
+}
+
+#section1{
+    grid-area: section1;
+}
+
+#section1 img{
+    margin-top : 20px;
+    width : 100px;
+}
+#section3{
+    grid-area: section3;
+}
+aside{
+    margin : 0 5px;
+}
+
+.answer{
+    width : 15vw;
+}
+
+
+
+
+
+

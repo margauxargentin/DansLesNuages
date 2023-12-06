@@ -1,0 +1,217 @@
+heat_template_version: "2021-04-16"
+
+description: "Dans Les Nuages - Projet Cloud 2023"
+
+parameters:
+  volume_name:
+    type: string
+    description: Name given to the volume
+    default: Volume
+  volume_size:
+    type: number
+    description: Size of the volume
+    default: 2
+  external_network:
+    type: string
+    description: ID of external network
+    default: b2f07d8a-5b46-4fc8-a54e-e9cf4de8bee0
+  network_project_name:
+    type: string
+    description: Name given to the network
+    default: Network
+  key_name:
+    type: string
+    description: Name of keypair to assign to servers
+    default: IAI3_05_keypair1
+  backend_ip:
+    type: string
+    description: IP address to assign to back-end server
+    default: 192.168.105.2
+  frontend_ip:
+    type: string
+    description: IP address to assign to back-end server
+    default: 192.168.105.3
+  vm_name_front:
+    type: string
+    description: Name given to the front VM
+    default: FRONT-VM
+  vm_name_back:
+    type: string
+    description: Name given to the back VM
+    default: BACK-VM
+  image_front:
+    type: string
+    description: ID of image to use for front vm
+    default: 3bf080a-6068-4e24-bf62-d51b58cdca3a
+  image_back:
+    type: string
+    description: ID of image to use for back vm
+    default: 3bf080a-6068-4e24-bf62-d51b58cdca3a
+  flavor_front:
+    type: string
+    description: Name of Flavor to use for front vm
+    default: IAI3_05_Flavor
+  flavor_back:
+    type: string
+    description: Name of Flavor to use for back vm
+    default: IAI3_05_Flavor
+
+resources:
+  # Create Security Group for Back-end
+  SecurityGroup-Back:
+    type: "OS::Neutron::SecurityGroup"
+    properties:
+      name: "SecurityGroup-Back"
+      description: "Security Group For Back of DansLesNuages Project"
+      #rules:
+       # - direction: ingress
+        #  ethertype: IPv4
+         # port_range_min: 80
+          #port_range_max: 80
+          #protocol: tcp
+        #- direction: ingress
+         # ethertype: IPv4
+          #port_range_min: 443
+          #port_range_max: 443
+          #protocol: tcp
+
+  # Create Security Group for Front-end
+  SecurityGroup-Front:
+    type: "OS::Neutron::SecurityGroup"
+    properties:
+      name: "SecurityGroup-Front"
+      description: "Security Group For Front of DansLesNuages Project"
+      rules: 
+        - direction: ingress
+          ethertype: IPv4
+          port_range_min: 22
+          port_range_max: 22
+          protocol: tcp
+        - direction: ingress
+          ethertype: IPv4
+          port_range_min: 80
+          port_range_max: 80
+          protocol: tcp
+        - direction: ingress
+          ethertype: IPv4
+          port_range_min: 443
+          port_range_max: 443
+          protocol: tcp
+
+  # Create Volume
+  Volume-Back:
+    type: "OS::Cinder::Volume"
+    properties:
+      name: { get_param: volume_name }
+      size: { get_param: volume_size }
+      description: "Volume for DansLesNuages Project"
+
+  # Create Network
+  Network-Project:
+    type: "OS::Neutron::Net"
+    properties:
+      name: { get_param: network_project_name }
+ 
+  # Create Subnet
+  Subnet-Project:
+    type: "OS::Neutron::Subnet"
+    properties:
+      name: "Subnet-Project"
+      network_id: { get_resource: Network-Project }
+      cidr: 192.168.105.100/24
+
+  # Create port for Back-end
+  Port-Back:
+    type: "OS::Neutron::Port"
+    properties:
+      name: "Port-Back"
+      network_id: { get_resource: Network-Project }
+      fixed_ips:
+        - subnet_id: { get_resource: Subnet-Project }
+        - ip_address: { get_param: backend_ip }
+      security_groups:
+        - { get_resource: SecurityGroup-Back }
+
+  # Create port for Front-end
+  Port-Front:
+    type: "OS::Neutron::Port"
+    properties:
+      name: "Port-Front"
+      network_id: { get_resource: Network-Project }
+      fixed_ips:
+        - subnet_id: { get_resource: Subnet-Project }
+        - ip_address: { get_param: frontend_ip }
+      security_groups:
+        - { get_resource: SecurityGroup-Front }
+
+  # Create Floating IP for Front-end
+  FloatingIP-Front:
+    type: "OS::Neutron::FloatingIP"
+    properties:
+      floating_network: { get_param: external_network }
+      port_id: { get_resource: Port-Front }
+
+# Create Router
+  Router-Project:
+    type: "OS::Neutron::Router"
+    properties:
+      name: "Router-Project"
+      external_gateway_info:
+        network: {get_param: external_network}
+      #routes:
+      #  - destination: # À DÉFINIR
+
+  # Create Router Interface
+  RouterInterface-Project:
+    type: "OS::Neutron::RouterInterface"
+    properties:
+      router_id: { get_resource: Router-Project }
+      subnet_id: { get_resource: Subnet-Project }
+
+  # Create VM for Back-end
+  VM-Debian-Back: 
+    type: "OS::Nova::Server"
+    properties:
+      key_name: { get_param: key_name }
+      name: { get_param: vm_name_back }
+      image: { get_param: image_back }
+      flavor: { get_param: flavor_back }
+      networks:
+        - network: { get_resource: Network-Project }
+      user_data_format: RAW
+      user_data: |
+        #cloud-config
+        users:
+          - name: test
+            plain_text_passwd: 123test
+            home: /home/test
+            lock_passwd: false
+            shell: /bin/bash
+            groups: 
+              - sudo
+              - docker
+        final_message: “System is up”
+        
+  # Create VM for Front-end
+  VM-Debian-Front:
+    type: "OS::Nova::Server"
+    properties:
+      key_name: { get_param: key_name }
+      name: { get_param: vm_name_front }
+      image: { get_param: image_front }
+      flavor: { get_param: flavor_front }
+      networks:
+        - network: { get_resource: Network-Project }
+      user_data_format: RAW
+      user_data: |
+        #cloud-config
+        users:
+          - name: test
+            plain_text_passwd: 123test
+            home: /home/test
+            lock_passwd: false
+            shell: /bin/bash
+            groups: 
+              - sudo
+              - docker
+        final_message: “System is up”

@@ -1,0 +1,24 @@
+parameters:
+
+# VOLUME
+  volume_name: 
+  volume_size: 
+
+# NETWORK
+  external_network: 
+  network_project_name: 
+
+# KEY PAIRS
+  key_name: 
+
+# FRONT VM
+  image_front: 
+  flavor_front: 
+  vm_name_front: 
+  frontend_ip: 
+
+# BACK VM
+  image_back: 
+  flavor_back: 
+  vm_name_back: 
+  backend_ip: 

@@ -27,10 +27,6 @@ parameters:
     type: string
     description: IP address to assign to back-end server
     default: 192.168.105.2
-  frontend_ip:
-    type: string
-    description: IP address to assign to back-end server
-    default: 192.168.105.3
   vm_name_front:
     type: string
     description: Name given to the front VM
@@ -120,46 +116,13 @@ resources:
       network_id: { get_resource: Network-Project }
       cidr: 192.168.105.100/24
 
-  # Create port for Back-end
-  Port-Back:
-    type: "OS::Neutron::Port"
-    properties:
-      name: "Port-Back"
-      network_id: { get_resource: Network-Project }
-      fixed_ips:
-        - subnet_id: { get_resource: Subnet-Project }
-        - ip_address: { get_param: backend_ip }
-      security_groups:
-        - { get_resource: SecurityGroup-Back }
-
-  # Create port for Front-end
-  Port-Front:
-    type: "OS::Neutron::Port"
-    properties:
-      name: "Port-Front"
-      network_id: { get_resource: Network-Project }
-      fixed_ips:
-        - subnet_id: { get_resource: Subnet-Project }
-        - ip_address: { get_param: frontend_ip }
-      security_groups:
-        - { get_resource: SecurityGroup-Front }
-
-  # Create Floating IP for Front-end
-  FloatingIP-Front:
-    type: "OS::Neutron::FloatingIP"
-    properties:
-      floating_network: { get_param: external_network }
-      port_id: { get_resource: Port-Front }
-
 # Create Router
   Router-Project:
     type: "OS::Neutron::Router"
     properties:
       name: "Router-Project"
       external_gateway_info:
-        network: {get_param: external_network}
-      #routes:
-      #  - destination: # À DÉFINIR
+        network: { get_param: external_network }
 
   # Create Router Interface
   RouterInterface-Project:
@@ -167,30 +130,19 @@ resources:
     properties:
       router_id: { get_resource: Router-Project }
       subnet_id: { get_resource: Subnet-Project }
-
-  # Create VM for Back-end
-  VM-Debian-Back: 
-    type: "OS::Nova::Server"
+    
+  # Create Floating IP for Front-end
+  FloatingIP-Front:
+    type: "OS::Neutron::FloatingIP"
     properties:
-      key_name: { get_param: key_name }
-      name: { get_param: vm_name_back }
-      image: { get_param: image_back }
-      flavor: { get_param: flavor_back }
-      networks:
-        - network: { get_resource: Network-Project }
-      user_data_format: RAW
-      user_data: |
-        #cloud-config
-        users:
-          - name: test
-            plain_text_passwd: 123test
-            home: /home/test
-            lock_passwd: false
-            shell: /bin/bash
-            groups: 
-              - sudo
-              - docker
-        final_message: “System is up”
+      floating_network: { get_param: external_network }
+
+  # Floating IP Association to Front-end
+  Floating-association:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: FloatingIP-Front }
+      port_id: { get_resource: Port-Front }
         
   # Create VM for Front-end
   VM-Debian-Front:
@@ -201,17 +153,75 @@ resources:
       image: { get_param: image_front }
       flavor: { get_param: flavor_front }
       networks:
-        - network: { get_resource: Network-Project }
+        - port: { get_resource: Port-Front }
       user_data_format: RAW
       user_data: |
         #cloud-config
         users:
-          - name: test
-            plain_text_passwd: 123test
+          - name: IAI05
+            plain_text_passwd: password
             home: /home/test
             lock_passwd: false
             shell: /bin/bash
             groups: 
               - sudo
               - docker
-        final_message: “System is up”
+        runcmd:
+          - 'cd /home/IAI05'
+          - 'git clone https://github.com/margauxargentin/DansLesNuages.git'
+          - 'cd DansLesNuages/FRONT'
+          - 'docker build . -t dln-image:latest'
+          - 'docker-compose up -d',
+
+  # Create VM for Back-end
+  VM-Debian-Back: 
+    type: "OS::Nova::Server"
+    properties:
+      key_name: { get_param: key_name }
+      name: { get_param: vm_name_back }
+      image: { get_param: image_back }
+      flavor: { get_param: flavor_back }
+      block_device_mapping:
+        - device_name: /dev/vdb
+          volume_id: { get_resource: Volume-Back }
+      networks:
+        - port: { get_resource: Port-Back }
+      user_data_format: RAW
+      user_data: |
+        #cloud-config
+        users:
+          - name: IAI05
+            plain_text_passwd: password
+            home: /home/IAI05
+            lock_passwd: false
+            shell: /bin/bash
+            groups: 
+              - sudo
+              - docker
+        runcmd:
+          - 'cd /home/IAI05'
+          - 'git clone https://github.com/margauxargentin/DansLesNuages.git'
+          - 'cd DansLesNuages/BACK'
+          - 'docker-compose up -d',
+
+  # Create port for Front-end
+  Port-Front:
+    type: "OS::Neutron::Port"
+    properties:
+      name: "Port-Front"
+      network: { get_resource: Network-Project }
+      fixed_ips:
+        - subnet_id: { get_resource: Subnet-Project }
+      security_groups:
+        - { get_resource: SecurityGroup-Front }
+
+  # Create port for Back-end
+  Port-Back:
+    type: "OS::Neutron::Port"
+    properties:
+      name: "Port-Back"
+      network: { get_resource: Network-Project }
+      fixed_ips:
+        - ip_address: { get_param: backend_ip }
+      security_groups:
+        - { get_resource: SecurityGroup-Back }

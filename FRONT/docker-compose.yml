@@ -3,5 +3,6 @@ services:
   php:
     image: dln-image:latest
     container_name: DLN-FRONT
+    restart: always
     ports:
       - "8000:80"

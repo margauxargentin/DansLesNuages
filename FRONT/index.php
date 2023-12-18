@@ -17,13 +17,13 @@
         <p>Hello, moi c'est Cumulus ! </p>
 
         <div class="ad" id="ad_Cumulus">
-            <button onclick="closeAd('ad_Cumulus')">cross</button>
+            <button onclick="closeAd('ad_Cumulus')">close</button>
             <img src="medias/ad_Cumulus.png" alt="Nouveau ! acheter Cumulus pour seulement 9,99€ ! Une peluche en 100% polyestère aussi doux que du coton et légère comme l'air.">
         </div>
 
         <div>
             <h2>Le savais-tu ?</h2>
-            <p> <span>La paréidolie</span> est comme une illustion d'optique par laquelle nous associons une forme connue à un élément neutre. C'est par exemple l'effet qui nous permet de trouver une formes familères dans les nuages.</p>
+            <p> <span>La paréidolie</span> est comme une illusion d'optique par laquelle nous associons une forme connue à un élément neutre. C'est par exemple l'effet qui nous permet de trouver une forme familère dans les nuages.</p>
         </div>
     </aside>
      

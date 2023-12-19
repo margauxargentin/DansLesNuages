@@ -159,8 +159,8 @@ resources:
         #cloud-config
         users:
           - name: IAI05
-            plain_text_passwd: password
-            home: /home/test
+            plain_text_passwd: 123qwerty
+            home: /home/IAI05
             lock_passwd: false
             shell: /bin/bash
             groups: 
@@ -171,7 +171,7 @@ resources:
           - 'git clone https://github.com/margauxargentin/DansLesNuages.git'
           - 'cd DansLesNuages/FRONT'
           - 'docker build . -t dln-image:latest'
-          - 'docker-compose up -d',
+          - 'docker-compose up -d'
 
   # Create VM for Back-end
   VM-Debian-Back: 
@@ -191,7 +191,7 @@ resources:
         #cloud-config
         users:
           - name: IAI05
-            plain_text_passwd: password
+            plain_text_passwd: 123qwerty
             home: /home/IAI05
             lock_passwd: false
             shell: /bin/bash
@@ -202,7 +202,7 @@ resources:
           - 'cd /home/IAI05'
           - 'git clone https://github.com/margauxargentin/DansLesNuages.git'
           - 'cd DansLesNuages/BACK'
-          - 'docker-compose up -d',
+          - 'docker-compose up -d'
 
   # Create port for Front-end
   Port-Front:

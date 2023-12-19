@@ -17,7 +17,7 @@ include('config.php');
 <body>
     <?php 
     $sql = "SELECT * FROM votre_table";
-$result = $conn->query($sql);
+$result = $dbh->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {

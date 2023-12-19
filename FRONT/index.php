@@ -1,3 +1,8 @@
+<?php
+include('config.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,6 +15,17 @@
 </head>
 
 <body>
+    <?php 
+    $sql = "SELECT * FROM votre_table";
+$result = $dbh->query($sql);
+
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo "Colonne1: " . $row["colonne1"]. " - Colonne2: " . $row["colonne2"]. "<br>";
+    }
+} else {
+    echo "0 résultats";
+} ?>
     <main> 
     <aside  id="section1">
         <img src="medias/Cumulus.svg" alt="Nuage blanc souriant avec un petit soleil dans le coin droit">

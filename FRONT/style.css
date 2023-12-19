@@ -24,7 +24,7 @@ body{
     padding:0;
     display: grid;
     grid-template-columns: 20% 60% 20%;
-    grid-template-rows: 50px auto 80px;
+    grid-template-rows: auto 80px;
     grid-template-areas: 
     "main main main"
     ". footer .";

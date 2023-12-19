@@ -6,9 +6,9 @@ $dbname = "Nuage";
 
 // Créer une connexion
 //$conn = new mysqli($servername, $username, $password, $dbname);
-$dbh = new PDO('mysql:host=localhost;dbname=Nuage', $user, $pass);
+$dbh = new PDO('mysql:host=localhost;dbname=Nuage', $username, $password);
 // Vérifier la connexion
-if ($conn->connect_error) {
-    die("La connexion a échoué : " . $conn->connect_error);
+if ($dbh->connect_error) {
+    die("La connexion a échoué : " . $dbh->connect_error);
 }
 ?>

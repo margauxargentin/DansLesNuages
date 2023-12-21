@@ -10,6 +10,10 @@ $result = $mysqli->query($sql);
 
 // insert data into the table player 
 // $sql_add = "INSERT INTO `Players` (`Name`, `Score`) VALUES
-// ('Cumuls', 3),('Margaux', 2);";
+// ('Cumuls', 5),('Margaux', 4);";
 // $result = $mysqli->query($sql_add);
+
+// cleand data base 
+$sql_clean = "DELETE FROM `Players`;";
+$result = $mysqli->query($sql_clean);
 ?>

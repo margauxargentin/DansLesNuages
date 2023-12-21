@@ -16,21 +16,38 @@ function closeAd(id){
 
 
 // ====== MANAGE QUIZZ ====== //
-
 const questions = [
     {
-        question: "Quelle est la capitale de la France?",
-        options: ["Paris", "Londres", "Berlin", "Madrid"],
-        answer: "Paris",
-        image: "hearth"
+        question: "A quoi te fait penser le nuage ?",
+        options: ["Coq", "Coeur", "Patate"],
+        answer: "Coq",
+        image: "chicker"
     },
     {
-        question: "Quelle est la couleur du ciel?",
-        options: ["Bleu", "Vert", "Rouge", "Jaune"],
-        answer: "Bleu",
-        image:""
+        question: "A quoi te fait penser le nuage ?",
+        options: ["Banane", "Baleine", "Sirène"],
+        answer: "Baleine",
+        image: "whale"
     },
-    // Ajoutez d'autres questions ici
+    {
+        question: "A quoi te fait penser le nuage ?",
+        options: ["Rhinocéros", "Dumbo", "Eléphant"],
+        answer: "Eléphant",
+        image: "elephant"
+    },
+    {
+        question: "A quoi te fait penser le nuage ?",
+        options: ["Loup", "Papillon", "Chien"],
+        answer: "Chien",
+        image: "dog"
+    },
+    {
+        question: "A quoi te fait penser le nuage ?",
+        options: ["Cochon", "Sanglier","Veau"],
+        answer: "Cochon",
+        image: "pig"
+    },
+
 ];
 let currentQuestion=0;
 
@@ -50,7 +67,7 @@ function displayQuestion() {
     questionElement.textContent = questions[currentQuestion].question;
     
     //Print the image
-    questionImage.src="medias/cloud/hearth.jpg";
+    questionImage.src="medias/cloud/"+ questions[currentQuestion].image+".jpg";
     questionImage.classList.add("image");
 
     // Affiche les options

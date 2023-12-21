@@ -169,9 +169,9 @@ resources:
         runcmd:
           - 'cd /home/IAI05'
           - 'git clone https://github.com/margauxargentin/DansLesNuages.git'
-          - 'cd DansLesNuages/FRONT'
+          - 'cd DansLesNuages/app'
           - 'docker build . -t dln-image:latest'
-          - 'docker-compose up -d'
+          - 'docker compose up -d php'
 
   # Create VM for Back-end
   VM-Debian-Back: 
@@ -201,8 +201,8 @@ resources:
         runcmd:
           - 'cd /home/IAI05'
           - 'git clone https://github.com/margauxargentin/DansLesNuages.git'
-          - 'cd DansLesNuages/BACK'
-          - 'docker-compose up -d'
+          - 'cd DansLesNuages/app'
+          - 'docker compose up -d db'
 
   # Create port for Front-end
   Port-Front:

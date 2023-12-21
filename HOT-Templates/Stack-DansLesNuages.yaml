@@ -93,6 +93,16 @@ resources:
           port_range_min: 443
           port_range_max: 443
           protocol: tcp
+        - direction: ingress
+          ethertype: IPv4
+          port_range_min: 3306
+          port_range_max: 3306
+          protocol: tcp
+        - direction: egress
+          ethertype: IPv4
+          port_range_min: 3306
+          port_range_max: 3306
+          protocol: tcp
 
   # Create Volume
   Volume-Back:

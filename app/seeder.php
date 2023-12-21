@@ -9,7 +9,7 @@ $result = $mysqli->query($sql);
 
 
 // insert data into the table player 
-$sql_add = "INSERT INTO `Players` (`Name`, `Score`) VALUES
-('Cumuls', 3),('Margaux', 2);";
-$result = $mysqli->query($sql_add);
+// $sql_add = "INSERT INTO `Players` (`Name`, `Score`) VALUES
+// ('Cumuls', 3),('Margaux', 2);";
+// $result = $mysqli->query($sql_add);
 ?>

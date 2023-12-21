@@ -89,7 +89,11 @@ section{
 }
 
 /* ======== GLOBAL =======*/
+#quiz-container {
+    display: none;
+  }
 
+  
 img{
     box-sizing: border-box;
 }

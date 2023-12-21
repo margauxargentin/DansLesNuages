@@ -1,5 +1,5 @@
 <?php
-$servername = "192.168.105.10";
+$servername = "db";
 $username = "iai3_05_user";
 $password = "P@ssw0rd";
 $dbname = "Nuage";

@@ -1,17 +1,9 @@
 <?php
     include('./config.php');
     include('./seeder.php');
-
-    // $sql = "SELECT * FROM Players";
-    // $result = $mysqli->query($sql);
-
-    // if ($result->num_rows > 0) {
-    //     while($row = $result->fetch_assoc()) {
-    //         echo "Colonne1: " . $row["colonne1"]. " - Colonne2: " . $row["colonne2"]. "<br>";
-    //     }
-    // } else {
-    //     echo "0 résultats";
-    // } 
+    // keep all players whith their score
+    $sql = "SELECT * FROM `Players` ORDER BY Score DESC";
+    $result = $mysqli->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -46,8 +38,8 @@
     <section>
         <h1> Dans les nuages</h1>
         <div class="intro">
-        <h2>Petit titre</h2>
-        <img alt="Cumulus, un nuage blanc souriant avec un petit soleil dans le coin est allongé dans l'herbe en regardant vers le ciel">
+        <h2>Quizz</h2>
+        <!-- <img alt="Cumulus, un nuage blanc souriant avec un petit soleil dans le coin est allongé dans l'herbe en regardant vers le ciel"> -->
         <p>J'adore regarder le ciel et imaginer les formes des nuages.
         Saura-tu retrouver les formes de chacun d'eux ?</p>
      
@@ -58,7 +50,8 @@
             <input type="text" id="pseudo" placeholder="Cumulus">
             <button onclick="displayQuestion()"> C'est parti ! </button>
         </form>
-        <!-- <form class="question">
+
+         <!-- <form class="question">
             <div class="image">
                 <img src="medias/cloud/hearth.jpg">-->
                 <!-- <p >src : <a href="https://actu.fr/bretagne/saint-brieuc_22278/pres-saint-brieuc-nuage-forme-coeur_22917080.html">actu.fr</a></p>     -->
@@ -80,11 +73,13 @@
     </section>
     <aside id="section3">
         <h2>Classement</h2>
-        <form>
-           <label for="name">ton pseudo</label>
-           <input type="text" id="name">
-           <button>Valider</button>
-        </form>
+        <div>
+            <?php foreach ($result as $res){?>
+            <p> <?php echo($res["Score"]);?> </p>
+            <p> <?php echo($res["Name"]);?> </p>
+            
+            <?php } ?>
+        </div>
     </aside>
     </main>
     <footer>

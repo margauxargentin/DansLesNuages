@@ -1,6 +1,16 @@
 <?php
-include('config.php');
+    include('./config.php');
 
+    $sql = "SELECT * FROM votre_table";
+    $result = $mysqli->query($sql);
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "Colonne1: " . $row["colonne1"]. " - Colonne2: " . $row["colonne2"]. "<br>";
+        }
+    } else {
+        echo "0 résultats";
+    } 
 ?>
 
 <!DOCTYPE html>
@@ -15,17 +25,6 @@ include('config.php');
 </head>
 
 <body>
-    <?php 
-    $sql = "SELECT * FROM votre_table";
-$result = $dbh->query($sql);
-
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        echo "Colonne1: " . $row["colonne1"]. " - Colonne2: " . $row["colonne2"]. "<br>";
-    }
-} else {
-    echo "0 résultats";
-} ?>
     <main> 
     <aside  id="section1">
         <img src="medias/Cumulus.svg" alt="Nuage blanc souriant avec un petit soleil dans le coin droit">

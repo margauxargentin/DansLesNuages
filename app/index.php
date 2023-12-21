@@ -1,10 +1,4 @@
-<?php
-    include('./config.php');
-    include('./seeder.php');
-    // keep all players whith their score
-    $sql = "SELECT * FROM `Players` ORDER BY Score DESC";
-    $result = $mysqli->query($sql);
-?>
+
 
 <?php include('./header.php'); ?>
 

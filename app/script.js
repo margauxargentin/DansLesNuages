@@ -21,7 +21,7 @@ const questions = [
         question: "A quoi te fait penser le nuage ?",
         options: ["Coq", "Coeur", "Patate"],
         answer: "Coq",
-        image: "chicker"
+        image: "chicken"
     },
     {
         question: "A quoi te fait penser le nuage ?",
@@ -53,24 +53,15 @@ let currentQuestion=0;
 
 // Display the current question
 function displayQuestion() {
-   
-    const questionContainer = document.getElementsByClassName("question");
-    const firstquestion = document.getElementById("first-question");
-    const questionImage = document.getElementById("question-image");
-    const questionElement = document.getElementById("question");
+    const questionElement = document.getElementById("question-element");
     const optionsContainer = document.getElementById("answers-container");
-
-    firstquestion.classList.add("hidden");
-    console.log(questionContainer[0]);
-    questionContainer[0].classList.remove("hidden");
     // Print the question
     questionElement.textContent = questions[currentQuestion].question;
     
     //Print the image
-    questionImage.src="medias/cloud/"+ questions[currentQuestion].image+".jpg";
-    questionImage.classList.add("image");
-
-    // Affiche les options
+    // document.getElementsByClassName("question-image")[0].src=
+    document.getElementsByClassName("question-image")[0].src = "./medias/cloud/"+ questions[currentQuestion].image+".png";
+    // // Affiche les options
     optionsContainer.innerHTML = "";
     questions[currentQuestion].options.forEach(option => {
         const button = document.createElement("button");
@@ -112,4 +103,6 @@ function nextQuestion() {
         alert("Quiz terminé !");
     }
 }
+
+displayQuestion();
 

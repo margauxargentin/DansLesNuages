@@ -21,15 +21,13 @@ $result = $mysqli->query($sql_addPlayer);
             <img src="./medias/Cumulus.svg" alt="Cumulus, un nuage blanc souriant avec un petit soleil dans le coin est allongé dans l'herbe en regardant vers le ciel">
         </div>
 
-       <form class="question" action="./result.php" method="post">
-            <div class="image">
-                <img src="">
+       <form class="question-container question"  method="post">
+            <div  class="image">
+                <img class="question-image" >
            </div>
-            <label></label>
-            <button class="answer"> </button>
-            <button class="answer"> </button>
-            <button class="answer"> </button>
-            <button>Valider</button>
+            <label id="question-element"></label>
+            <div id="answers-container">
+            </div>
         </form> 
     </section>
 <?php include('./lastCol.php');?>

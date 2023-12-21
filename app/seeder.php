@@ -14,6 +14,6 @@ $result = $mysqli->query($sql);
 // $result = $mysqli->query($sql_add);
 
 // cleand data base 
-$sql_clean = "DELETE FROM `Players`;";
-$result = $mysqli->query($sql_clean);
+// $sql_clean = "DELETE FROM `Players`;";
+// $result = $mysqli->query($sql_clean);
 ?>

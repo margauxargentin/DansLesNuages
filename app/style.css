@@ -89,11 +89,7 @@ section{
 }
 
 /* ======== GLOBAL =======*/
-#quiz-container {
-    display: none;
-  }
 
-  
 img{
     box-sizing: border-box;
 }
@@ -106,7 +102,7 @@ img{
     width:100%;
 }
 .intro img{
-    width : 30%;
+    width : 20%;
 }
 .intro p{
     width : 70%;
@@ -154,6 +150,13 @@ aside{
 
 .answer{
     width : 15vw;
+}
+
+
+.players{
+    font-family: 'Gochi Hand', cursive;
+    color : var(--contrast-color2);
+    font-size: medium;
 }
 
 

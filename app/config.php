@@ -11,4 +11,5 @@ try {
   error_log($e->getMessage());
   exit('Error connecting to database'); //Should be a message a typical user could understand
 }
+
 ?>

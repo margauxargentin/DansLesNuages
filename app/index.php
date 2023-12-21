@@ -1,16 +1,17 @@
 <?php
     include('./config.php');
+    include('./seeder.php');
 
-    $sql = "SELECT * FROM votre_table";
-    $result = $mysqli->query($sql);
+    // $sql = "SELECT * FROM Players";
+    // $result = $mysqli->query($sql);
 
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "Colonne1: " . $row["colonne1"]. " - Colonne2: " . $row["colonne2"]. "<br>";
-        }
-    } else {
-        echo "0 résultats";
-    } 
+    // if ($result->num_rows > 0) {
+    //     while($row = $result->fetch_assoc()) {
+    //         echo "Colonne1: " . $row["colonne1"]. " - Colonne2: " . $row["colonne2"]. "<br>";
+    //     }
+    // } else {
+    //     echo "0 résultats";
+    // } 
 ?>
 
 <!DOCTYPE html>

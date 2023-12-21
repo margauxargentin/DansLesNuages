@@ -171,7 +171,7 @@ resources:
           - 'git clone https://github.com/margauxargentin/DansLesNuages.git'
           - 'cd DansLesNuages/app'
           - 'docker build . -t dln-image:latest'
-          - 'docker compose up -d php'
+          - 'docker-compose up -d php'
 
   # Create VM for Back-end
   VM-Debian-Back: 
@@ -202,7 +202,7 @@ resources:
           - 'cd /home/IAI05'
           - 'git clone https://github.com/margauxargentin/DansLesNuages.git'
           - 'cd DansLesNuages/app'
-          - 'docker compose up -d db'
+          - 'docker-compose up -d db'
 
   # Create port for Front-end
   Port-Front:

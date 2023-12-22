@@ -4,17 +4,17 @@
 
 Discover fun facts about clouds and test your imagination in the DansLesNuages website.
 
-This site can be build through OpenStack. Using the template provided will build an entire environment composed by : 
+This site can be built through OpenStack. Using the provided template will build an entire environment composed of : 
 - One virtual machine hosting a docker container for PHP and Apache, which will display the front of the app
 - One virtual machine hosting a docker container for MySQL, which will manage the data of the app
 - A router and its interfaces to link the VMs and to connect to Internet
-- A floating IP linked to the front that will allow us to acces the app through Internet
+- A floating IP linked to the front that will allow us to access the app through Internet
 - Security groups and rules to allow or deny traffic on specific ports
 - A volume attached to the BACK VM.
 
 ## Requirements
 
-To build the app, you must need an OpenStack environnement.
+To build the app, you need an OpenStack environnement.
 
 ## How to build the app
 
